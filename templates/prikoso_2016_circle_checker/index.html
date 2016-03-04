@@ -1,0 +1,151 @@
+{% extends "prikoso_2016_circle_checker/base.html" %}
+{% block body %}
+<div class="container">
+  <div class="header">
+	<h1>{% block title %}🌈✨プリこそ川崎2016春 サークルチェッカー{% endblock %}</h1>
+	<p>
+	  <!-- tweet button -->
+	  <a href="https://twitter.com/share" class="twitter-share-button"
+		 data-size="large">Tweet</a>
+	  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+	</p>	
+	<p>
+	  <a href="https://twitter.com/akiratamcat/lists/2016?s=09">
+		「プリこそ川崎2016春」参加者サークルさんのリスト</a>
+	  の最近のツイート(〜3/4)から、画像付きのツイートを一覧にしたページです。
+	  サークルチェックにお役立てください。作者:
+	  <a href="https://twitter.com/sakuramochi_0">さくらもち(@sakuramochi_0)</a>
+	</p>
+	<p>
+	  ※ツイートが多いので、画像が表示されるまで少し時間がかかるかも…。
+	</p>
+	{% if edit %}
+	<p>説明:
+	  <ul>
+		<li>「📌 ピンをとめる」と、ピンでとめたツイートを一番最初に固定することができます。</li>
+		<li>「✗ 非表示にする」と、一覧に表示されなくなります。</li>
+	  </ul>
+	</p>
+	{% endif %}
+	<ul class="page-btn list-inline">
+	  <li><a class="btn btn-default" href="{% url 'prikoso_2016_circle_checker.views.index' 1 %}">01-09</a></li>
+	  <li><a class="btn btn-default" href="{% url 'prikoso_2016_circle_checker.views.index' 2 %}">10-19</a></li>
+	  <li><a class="btn btn-default" href="{% url 'prikoso_2016_circle_checker.views.index' 3 %}">20-29</a></li>
+	  <li><a class="btn btn-default" href="{% url 'prikoso_2016_circle_checker.views.index' 4 %}">30-39</a></li>
+	  <li><a class="btn btn-default" href="{% url 'prikoso_2016_circle_checker.views.index' 5 %}">40-48</a></li>
+	  {% if not edit %}
+	  <li><a class="btn btn-default" href="edit">📌 ピン留めと表示/非表示を編集する</a></li>
+	  {% else %}
+	  <li><a class="btn btn-default" href="..">編集を終わる</a></li>
+	  {% endif %}
+	</ul>
+  </div>
+
+  <!-- csrf -->
+  {% csrf_token %}
+  
+  <div class="main col-lg-12">
+	{% for user in users %}
+	<hr/>
+	<div class="user">
+	  <div class="user-info">
+		<p>
+		  <a href="https://twitter.com/{{ tw.tweet.user.screen_name }}">
+			<span class="space_num">#{{ user.space_num|stringformat:"02d" }} </span>
+			<span class="icon">
+			  <img src="{{ user.user.profile_image_url }}" alt="Twitterアイコン" />
+			</span>
+			<span class="name">{{ user.user.name}}</span>
+			<span class="screen_name"> (@{{ user.user.screen_name }})</span>
+		  </a>
+		</p>
+	  </div>
+	  <div class="tweets">
+		{% for tweets in user.tweets_list %}
+		{% for tw in tweets %}
+		<div class="tweet">
+		  <blockquote class="twitter-tweet" width="300px">
+			<p lang="ja" dir="ltr">{{ tw.tweet.text }}</p>
+			<a href="https://twitter.com/{{ tw.tweet.user.screen_name }}/status/{{ tw.tweet.id_str }}">
+			  {{ tw.tweet.created_at }}
+			</a>
+		  </blockquote>
+		  {% if edit %}
+		  <p>
+			<a class="pin{% if tw.pin %} hide{% endif %}" data-id="{{ tw.tweet.id }}">[📌 ピンでとめる]</a>
+			<a class="unpin{% if not tw.pin %} hide{% endif %}" data-id="{{ tw.tweet.id }}">[👆 ピンを外す]</a>
+			<a class="disable{% if tw.disable %} hide{% endif %}" data-id="{{ tw.tweet.id }}">[✗ 非表示にする！]</a>
+			<a class="enable{% if not tw.disable %} hide{% endif %}" data-id="{{ tw.tweet.id }}">[○ 再表示する！]</a>
+		  </p>
+		  {% endif %}
+		</div>
+		{% endfor %}
+		{% endfor %}
+	  </div>
+	</div>
+	{% endfor %}
+  </div>
+
+  <div class="footer">
+	<ul class="page-btn list-inline">
+	  <li><a class="btn btn-default" href="{% url 'prikoso_2016_circle_checker.views.index' 1 %}">01-09</a></li>
+	  <li><a class="btn btn-default" href="{% url 'prikoso_2016_circle_checker.views.index' 2 %}">10-19</a></li>
+	  <li><a class="btn btn-default" href="{% url 'prikoso_2016_circle_checker.views.index' 3 %}">20-29</a></li>
+	  <li><a class="btn btn-default" href="{% url 'prikoso_2016_circle_checker.views.index' 4 %}">30-39</a></li>
+	  <li><a class="btn btn-default" href="{% url 'prikoso_2016_circle_checker.views.index' 5 %}">40-48</a></li>
+	  {% if not edit %}
+	  <li><a class="btn btn-default" href="edit">📌 ピン留めと表示/非表示を編集する</a></li>
+	  {% else %}
+	  <li><a class="btn btn-default" href="..">編集を終わる</a></li>
+	  {% endif %}
+	</ul>
+  </div>
+</div>
+
+<script>
+  $('.pin').click(
+    function(){
+      $.post('{% url 'prikoso_2016_circle_checker.views.pin' %}', {
+        id: $(this).data('id'),
+        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+      });
+      $(this).parent().find('.pin').toggleClass('hide');
+      $(this).parent().find('.unpin').toggleClass('hide');
+    }
+  );
+
+  $('.unpin').click(
+    function(){
+      $.post('{% url 'prikoso_2016_circle_checker.views.unpin' %}', {
+        id: $(this).data('id'),
+        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+      })
+      $(this).parent().find('.pin').toggleClass('hide');
+      $(this).parent().find('.unpin').toggleClass('hide');
+    }
+  );
+
+  $('.disable').click(
+    function(){
+      $.post('{% url 'prikoso_2016_circle_checker.views.disable' %}', {
+        id: $(this).data('id'),
+        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+      });
+      $(this).parent().find('.disable').toggleClass('hide');
+      $(this).parent().find('.enable').toggleClass('hide');
+    }
+  );
+
+  $('.enable').click(
+    function(){
+      $.post('{% url 'prikoso_2016_circle_checker.views.enable' %}', {
+        id: $(this).data('id'),
+        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+      })
+      $(this).parent().find('.disable').toggleClass('hide');
+      $(this).parent().find('.enable').toggleClass('hide');
+    }
+  );
+</script>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>  
+{% endblock %}
