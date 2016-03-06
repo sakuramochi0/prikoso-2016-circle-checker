@@ -119,7 +119,7 @@ def index(request, page='1', edit=None):
             users.append({
                 'space_num': num,
                 'user': user,
-                'tweets_list': [pins, tweets[:6 - pins.count()]],
+                'tweets_list': [pins, tweets[:max(0, 6 - pins.count())]],
             })
 
     return render(request, 'prikoso_2016_circle_checker/index.html', {'users': users, 'edit': edit})

@@ -10,11 +10,18 @@
 	  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 	</p>	
 	<p>
+	  <a href="https://twitter.com/akiratamcat">
+		たむねこさん(@akiratamcat)
+	  </a>
+	  が作ってくださった
 	  <a href="https://twitter.com/akiratamcat/lists/2016?s=09">
-		「プリこそ川崎2016春」参加者サークルさんのリスト</a>
+		「プリこそ川崎2016春」参加者サークルさんのリスト
+	  </a>
 	  の最近のツイート(〜3/4)から、画像付きのツイートを一覧にしたページです。
-	  サークルチェックにお役立てください。作者:
-	  <a href="https://twitter.com/sakuramochi_0">さくらもち(@sakuramochi_0)</a>
+	  サークルチェックにお役立てください。</p>
+	<p>
+	  作者:
+	  <a href="https://twitter.com/sakuramochi_0">さくらもち(@sakuramochi_0)</a> / コード: <a href="https://github.com/sakuramochi0/prikoso-2016-circle-checker"><span class="fa fa-github"></span> GitHub</a>
 	</p>
 	<p>
 	  ※ツイートが多いので、画像が表示されるまで少し時間がかかるかも…。
@@ -28,11 +35,11 @@
 	</p>
 	{% endif %}
 	<ul class="page-btn list-inline">
-	  <li><a class="btn btn-default" href="{% url 'prikoso_2016_circle_checker.views.index' 1 %}">01-09</a></li>
-	  <li><a class="btn btn-default" href="{% url 'prikoso_2016_circle_checker.views.index' 2 %}">10-19</a></li>
-	  <li><a class="btn btn-default" href="{% url 'prikoso_2016_circle_checker.views.index' 3 %}">20-29</a></li>
-	  <li><a class="btn btn-default" href="{% url 'prikoso_2016_circle_checker.views.index' 4 %}">30-39</a></li>
-	  <li><a class="btn btn-default" href="{% url 'prikoso_2016_circle_checker.views.index' 5 %}">40-48</a></li>
+	  <li><a class="btn btn-default" href="{% url 'prikoso_2016_circle_checker.views.index' 1 %}">01〜</a></li>
+	  <li><a class="btn btn-default" href="{% url 'prikoso_2016_circle_checker.views.index' 2 %}">10〜</a></li>
+	  <li><a class="btn btn-default" href="{% url 'prikoso_2016_circle_checker.views.index' 3 %}">20〜</a></li>
+	  <li><a class="btn btn-default" href="{% url 'prikoso_2016_circle_checker.views.index' 4 %}">30〜</a></li>
+	  <li><a class="btn btn-default" href="{% url 'prikoso_2016_circle_checker.views.index' 5 %}">40〜</a></li>
 	  {% if not edit %}
 	  <li><a class="btn btn-default" href="edit">📌 ピン留めと表示/非表示を編集する</a></li>
 	  {% else %}
@@ -50,7 +57,7 @@
 	<div class="user">
 	  <div class="user-info">
 		<p>
-		  <a href="https://twitter.com/{{ tw.tweet.user.screen_name }}">
+		  <a href="https://twitter.com/{{ user.user.screen_name }}">
 			<span class="space_num">#{{ user.space_num|stringformat:"02d" }} </span>
 			<span class="icon">
 			  <img src="{{ user.user.profile_image_url }}" alt="Twitterアイコン" />
@@ -88,11 +95,11 @@
 
   <div class="footer">
 	<ul class="page-btn list-inline">
-	  <li><a class="btn btn-default" href="{% url 'prikoso_2016_circle_checker.views.index' 1 %}">01-09</a></li>
-	  <li><a class="btn btn-default" href="{% url 'prikoso_2016_circle_checker.views.index' 2 %}">10-19</a></li>
-	  <li><a class="btn btn-default" href="{% url 'prikoso_2016_circle_checker.views.index' 3 %}">20-29</a></li>
-	  <li><a class="btn btn-default" href="{% url 'prikoso_2016_circle_checker.views.index' 4 %}">30-39</a></li>
-	  <li><a class="btn btn-default" href="{% url 'prikoso_2016_circle_checker.views.index' 5 %}">40-48</a></li>
+	  <li><a class="btn btn-default" href="{% url 'prikoso_2016_circle_checker.views.index' 1 %}">01〜</a></li>
+	  <li><a class="btn btn-default" href="{% url 'prikoso_2016_circle_checker.views.index' 2 %}">10〜</a></li>
+	  <li><a class="btn btn-default" href="{% url 'prikoso_2016_circle_checker.views.index' 3 %}">20〜</a></li>
+	  <li><a class="btn btn-default" href="{% url 'prikoso_2016_circle_checker.views.index' 4 %}">30〜</a></li>
+	  <li><a class="btn btn-default" href="{% url 'prikoso_2016_circle_checker.views.index' 5 %}">40〜</a></li>
 	  {% if not edit %}
 	  <li><a class="btn btn-default" href="edit">📌 ピン留めと表示/非表示を編集する</a></li>
 	  {% else %}

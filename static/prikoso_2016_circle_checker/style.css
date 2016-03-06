@@ -1,3 +1,6 @@
 .tweet {
    display: inline-block;
 }
+.page-btn a {
+    margin-bottom: 0.5em;
+}
